@@ -14,7 +14,7 @@ import { app, auth } from "~firebase"
 setPersistence(auth, browserLocalPersistence)
 
 export const useFirebase = () => {
-  const [isLoading, setIsLoading] = useState(false)
+  const [isLoading, setIsLoading] = useState(true)
   const [user, setUser] = useState<User>(null)
 
   const firestore = useMemo(() => (user ? getFirestore(app) : null), [user])
