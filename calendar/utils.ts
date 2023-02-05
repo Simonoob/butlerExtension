@@ -1,6 +1,6 @@
 import axios from "axios"
 
-import type { CalendarEvent, CalendarInfo } from "./types"
+import type { CalendarEvent, CalendarEventInput, CalendarInfo } from "./types"
 
 const checkAuthToken = async () => {
   const authTokenInfo = await chrome.identity.getAuthToken({})
@@ -47,4 +47,12 @@ export const getCalendarsList = async (): Promise<CalendarInfo[]> => {
   const headers = await getHeaders()
   const response = await axios.get(url, { headers })
   return response.data.items
+}
+
+export const sendEventToCalendar = async (event: CalendarEventInput) => {
+  const url = "https://www.googleapis.com/calendar/v3/calendars/primary/events"
+  await checkAuthToken()
+  const headers = await getHeaders()
+  const response = await axios.post(url, event, { headers })
+  return response.data
 }

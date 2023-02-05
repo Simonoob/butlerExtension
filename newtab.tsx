@@ -3,6 +3,7 @@ import AuthButton from "~uiComponents/AuthButton"
 import CalendarEvents from "~uiComponents/CalendarEvents"
 import CalendarsList from "~uiComponents/CalendarsList"
 import FireStoreDoc from "~uiComponents/FireStoreDoc"
+import NewEvent from "~uiComponents/NewEvent"
 import WelcomeMessage from "~uiComponents/WelcomeMessage"
 
 export default function IndexNewtab() {
@@ -21,6 +22,7 @@ export default function IndexNewtab() {
       />
 
       <CalendarsList />
+      <NewEvent />
     </AppSkeleton>
   )
 }
