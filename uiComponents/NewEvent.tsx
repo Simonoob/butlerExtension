@@ -15,7 +15,7 @@ const NewEvent = () => {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    const { name, description, date, time, duration, location } = formState
+    const { name, description, date, time, duration } = formState
     const formattedDate = new Date(`${date}T${time}`).toISOString()
     const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone
     const event: CalendarEventInput = {
