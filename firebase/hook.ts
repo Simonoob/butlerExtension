@@ -6,7 +6,7 @@ import {
   setPersistence,
   signInWithCredential
 } from "firebase/auth"
-import { doc, getDoc, getFirestore } from "firebase/firestore"
+import { doc, getDoc, getDocFromServer, getFirestore } from "firebase/firestore"
 import { useEffect, useMemo, useState } from "react"
 
 import { app, auth } from "~firebase"
@@ -47,19 +47,27 @@ export const useFirebase = () => {
     })
   }
 
+  const createUserIfNecessary = async (user: User) => {
+    try {
+      // get the user's profile from Firestore
+      const docRef = doc(getFirestore(app), `users/${user.uid}`)
+      const userInServer = await getDocFromServer(docRef)
+      if (!userInServer.exists()) {
+        // if not found, create a new user
+        console.log("Creating new user.")
+        createUser(user)
+      }
+    } catch (e) {
+      console.error("An error occurred while verifying user profile", e)
+    }
+  }
+
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
       setIsLoading(false)
       setUser(user)
       if (!user) return
-      try {
-        // get the user's profile from Firestore
-        doc(getFirestore(app), `users/${user.uid}`)
-      } catch (e) {
-        console.warn("Could not get user profile. Creating new user.", e)
-        // if not found, create a new user
-        createUser(user)
-      }
+      createUserIfNecessary(user)
     })
   }, [])
 
