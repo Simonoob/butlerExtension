@@ -13,7 +13,6 @@ const NewEvent = () => {
     location: ""
   })
 
-  //form submit handler
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     const { name, description, date, time, duration, location } = formState
