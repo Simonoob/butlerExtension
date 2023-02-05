@@ -9,8 +9,7 @@ const NewEvent = () => {
     description: "",
     date: "",
     time: "",
-    duration: "",
-    location: ""
+    duration: ""
   })
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
