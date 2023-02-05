@@ -6,10 +6,12 @@ import {
   setPersistence,
   signInWithCredential
 } from "firebase/auth"
-import { getFirestore } from "firebase/firestore"
+import { doc, getDoc, getFirestore } from "firebase/firestore"
 import { useEffect, useMemo, useState } from "react"
 
 import { app, auth } from "~firebase"
+
+import { createUser } from "./utils"
 
 setPersistence(auth, browserLocalPersistence)
 
@@ -49,6 +51,15 @@ export const useFirebase = () => {
     onAuthStateChanged(auth, (user) => {
       setIsLoading(false)
       setUser(user)
+      if (!user) return
+      try {
+        // get the user's profile from Firestore
+        doc(getFirestore(app), `users/${user.uid}`)
+      } catch (e) {
+        console.warn("Could not get user profile. Creating new user.", e)
+        // if not found, create a new user
+        createUser(user)
+      }
     })
   }, [])
 

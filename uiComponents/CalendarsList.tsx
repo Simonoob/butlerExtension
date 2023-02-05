@@ -23,6 +23,7 @@ const CalendarsList = () => {
           <li key={calendar.id}>
             <h3>{calendar.summary}</h3>
             <p>{calendar.description}</p>
+            <p>calendar ID: {calendar.id}</p>
           </li>
         ))}
       </ul>
