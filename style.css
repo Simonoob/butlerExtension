@@ -1,0 +1,15 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html {
+  @apply h-screen relative bg-gray-50;
+}
+
+body {
+  @apply h-full overflow-hidden;
+}
+
+#__plasmo {
+  @apply h-full;
+}

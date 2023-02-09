@@ -3,6 +3,10 @@ import { QueryClient, QueryClientProvider } from "react-query"
 import { useFirebase } from "~firebase/hook"
 import AuthButton from "~uiComponents/AuthButton"
 
+import "../style.css"
+
+import PageLayout from "./PageLayout"
+
 const queryClient = new QueryClient()
 
 const AppSkeleton = ({ children }) => {
@@ -12,7 +16,9 @@ const AppSkeleton = ({ children }) => {
   if (!user && !isLoading) return <AuthButton />
 
   return (
-    <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
+    <QueryClientProvider client={queryClient}>
+      <PageLayout>{children}</PageLayout>
+    </QueryClientProvider>
   )
 }
 
