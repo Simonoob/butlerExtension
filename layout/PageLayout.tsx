@@ -4,9 +4,7 @@ import { useState } from "react"
 import { useFirebase } from "~firebase/hook"
 import { useFirestoreDoc } from "~firebase/use-firestore-doc"
 import SideBar from "~uiComponents/SideBar"
-import SideBarDesktop from "~uiComponents/SideBar"
 import TopNavMobile from "~uiComponents/TopNavMobile"
-import { classNames } from "~uiComponents/utils"
 
 export default function PageLayout({ children }) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)

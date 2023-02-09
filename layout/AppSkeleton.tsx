@@ -2,6 +2,7 @@ import { QueryClient, QueryClientProvider } from "react-query"
 
 import { useFirebase } from "~firebase/hook"
 import AuthButton from "~uiComponents/AuthButton"
+import LoadingSpinner from "~uiComponents/LoadingSpinner"
 
 import "../style.css"
 
@@ -12,7 +13,7 @@ const queryClient = new QueryClient()
 const AppSkeleton = ({ children }) => {
   const { user, isLoading } = useFirebase()
 
-  if (isLoading) return <div>Loading...</div>
+  if (isLoading) return <LoadingSpinner />
   if (!user && !isLoading) return <AuthButton />
 
   return (
