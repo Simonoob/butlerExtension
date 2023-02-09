@@ -4,7 +4,26 @@ import React, { Fragment } from "react"
 
 import { classNames } from "./utils"
 
-const SideBar = ({ navigation, mobileMenuOpen, setMobileMenuOpen, user }) => {
+const SideBar = ({
+  navigation,
+  mobileMenuOpen,
+  setMobileMenuOpen,
+  user
+}: {
+  navigation: {
+    name: string
+    href: string
+    icon: React.FC
+    current: boolean
+  }[]
+  mobileMenuOpen: boolean
+  setMobileMenuOpen: (open: boolean) => void
+  user: {
+    displayName: string
+    email: string
+    photoURL: string
+  }
+}) => {
   return (
     <>
       <Transition.Root show={mobileMenuOpen} as={Fragment}>
@@ -91,22 +110,24 @@ const SideBar = ({ navigation, mobileMenuOpen, setMobileMenuOpen, user }) => {
                   </nav>
                 </div>
                 <div className="flex flex-shrink-0 p-4 border-t border-gray-200">
-                  <a href="#" className="flex-shrink-0 block group">
-                    <div className="flex items-center">
-                      <div>
-                        <img
-                          className="inline-block w-10 h-10 rounded-full"
-                          src={user.imageUrl}
-                          alt=""
-                        />
+                  {user && (
+                    <a href="#" className="flex-shrink-0 block group">
+                      <div className="flex items-center">
+                        <div>
+                          <img
+                            className="inline-block w-10 h-10 rounded-full"
+                            src={user.photoURL}
+                            alt=""
+                          />
+                        </div>
+                        <div className="ml-3">
+                          <p className="text-base font-medium text-white">
+                            {user.displayName}
+                          </p>
+                        </div>
                       </div>
-                      <div className="ml-3">
-                        <p className="text-base font-medium text-white">
-                          {user.name}
-                        </p>
-                      </div>
-                    </div>
-                  </a>
+                    </a>
+                  )}
                 </div>
               </Dialog.Panel>
             </Transition.Child>
@@ -143,6 +164,7 @@ const SideBar = ({ navigation, mobileMenuOpen, setMobileMenuOpen, user }) => {
                       )}
                       aria-current={item.current ? "page" : undefined}>
                       <item.icon
+                        //@ts-ignore
                         className={classNames(
                           item.current
                             ? "text-white"
@@ -158,17 +180,19 @@ const SideBar = ({ navigation, mobileMenuOpen, setMobileMenuOpen, user }) => {
               </nav>
             </div>
             <div className="flex flex-shrink-0 pb-5">
-              <a href="#" className="flex-shrink-0 w-full">
-                <img
-                  className="block w-10 h-10 mx-auto rounded-full"
-                  src={user.imageUrl}
-                  alt=""
-                />
-                <div className="sr-only">
-                  <p>{user.name}</p>
-                  <p>Account settings</p>
-                </div>
-              </a>
+              {user && (
+                <a href="#" className="flex-shrink-0 w-full">
+                  <img
+                    className="block w-10 h-10 mx-auto rounded-full"
+                    src={user.photoURL}
+                    alt=""
+                  />
+                  <div className="sr-only">
+                    <p>{user.displayName}</p>
+                    <p>Account settings</p>
+                  </div>
+                </a>
+              )}
             </div>
           </div>
         </div>

@@ -1,13 +1,8 @@
-import { Dialog, Transition } from "@headlessui/react"
-import {
-  Bars3Icon,
-  CalendarDaysIcon,
-  QueueListIcon,
-  UserIcon,
-  XMarkIcon
-} from "@heroicons/react/24/outline"
-import { Fragment, useState } from "react"
+import { CalendarDaysIcon, QueueListIcon } from "@heroicons/react/24/outline"
+import { useState } from "react"
 
+import { useFirebase } from "~firebase/hook"
+import { useFirestoreDoc } from "~firebase/use-firestore-doc"
 import SideBar from "~uiComponents/SideBar"
 import SideBarDesktop from "~uiComponents/SideBar"
 import TopNavMobile from "~uiComponents/TopNavMobile"
@@ -16,12 +11,8 @@ import { classNames } from "~uiComponents/utils"
 export default function PageLayout({ children }) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
 
-  const user = {
-    name: "Emily Selman",
-    email: "emily.selman@example.com",
-    imageUrl:
-      "https://images.unsplash.com/photo-1502685104226-ee32379fefbe?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-  }
+  const { user } = useFirebase()
+  const { data: userInfo } = useFirestoreDoc(`users/${user?.uid}`)
   const navigation = [
     { name: "Calendar", href: "#", icon: CalendarDaysIcon, current: true },
     { name: "Timelines", href: "#", icon: QueueListIcon, current: false }
@@ -42,7 +33,10 @@ export default function PageLayout({ children }) {
         <SideBar
           mobileMenuOpen={mobileMenuOpen}
           setMobileMenuOpen={setMobileMenuOpen}
-          user={user}
+          user={{
+            ...user,
+            ...userInfo
+          }}
           navigation={navigation}
         />
 
