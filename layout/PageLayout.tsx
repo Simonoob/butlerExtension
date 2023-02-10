@@ -3,6 +3,7 @@ import { useState } from "react"
 
 import { useFirebase } from "~firebase/hook"
 import { useFirestoreDoc } from "~firebase/use-firestore-doc"
+import usePageStore, { Pages } from "~stores/pageStore"
 import SideBar from "~uiComponents/SideBar"
 import TopNavMobile from "~uiComponents/TopNavMobile"
 
@@ -11,9 +12,25 @@ export default function PageLayout({ children }) {
 
   const { user } = useFirebase()
   const { data: userInfo } = useFirestoreDoc(`users/${user?.uid}`)
-  const navigation = [
-    { name: "Calendar", href: "#", icon: CalendarDaysIcon, current: true },
-    { name: "Timelines", href: "#", icon: QueueListIcon, current: false }
+  const { active: activePage } = usePageStore()
+  const navigation: {
+    name: Pages
+    href: string
+    icon: React.FC
+    current: boolean
+  }[] = [
+    {
+      name: "calendar",
+      href: "#",
+      icon: CalendarDaysIcon,
+      current: activePage === "calendar"
+    },
+    {
+      name: "timelines",
+      href: "#",
+      icon: QueueListIcon,
+      current: activePage === "timelines"
+    }
   ]
 
   return (

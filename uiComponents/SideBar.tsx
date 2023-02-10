@@ -2,6 +2,8 @@ import { Dialog, Transition } from "@headlessui/react"
 import { XMarkIcon } from "@heroicons/react/24/outline"
 import React, { Fragment } from "react"
 
+import usePageStore, { Pages } from "~stores/pageStore"
+
 import { classNames } from "./utils"
 
 const SideBar = ({
@@ -11,7 +13,7 @@ const SideBar = ({
   user
 }: {
   navigation: {
-    name: string
+    name: Pages
     href: string
     icon: React.FC
     current: boolean
@@ -24,6 +26,7 @@ const SideBar = ({
     photoURL: string
   }
 }) => {
+  const { setActive: setActivePage } = usePageStore()
   return (
     <>
       <Transition.Root show={mobileMenuOpen} as={Fragment}>
@@ -93,6 +96,10 @@ const SideBar = ({
                               : "text-indigo-100 hover:bg-indigo-800 hover:text-white",
                             "group py-2 px-3 rounded-md flex items-center text-sm font-medium"
                           )}
+                          onClick={() => {
+                            setActivePage(item.name)
+                            setMobileMenuOpen(false)
+                          }}
                           aria-current={item.current ? "page" : undefined}>
                           <item.icon
                             className={classNames(
@@ -162,6 +169,7 @@ const SideBar = ({
                           : "text-indigo-100 hover:bg-indigo-800 hover:text-white",
                         "group w-full p-3 rounded-md flex flex-col items-center text-xs font-medium"
                       )}
+                      onClick={() => setActivePage(item.name)}
                       aria-current={item.current ? "page" : undefined}>
                       <item.icon
                         //@ts-ignore
