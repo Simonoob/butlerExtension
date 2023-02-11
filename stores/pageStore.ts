@@ -1,6 +1,6 @@
 import { create } from "zustand"
 
-export type Pages = "calendar" | "timelines"
+export type Pages = "calendar" | "timelines" | "settings"
 
 interface PageState {
   active: Pages

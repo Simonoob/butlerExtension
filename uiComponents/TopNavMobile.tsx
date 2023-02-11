@@ -1,16 +1,13 @@
 import { Bars3Icon } from "@heroicons/react/24/outline"
-import React from "react"
+
+import logoImage from "~assets/icon.png"
 
 const TopNavMobile = ({ setMobileMenuOpen }) => {
   return (
     <div className="lg:hidden">
       <div className="flex items-center justify-between px-4 py-2 bg-indigo-600 sm:px-6 lg:px-8">
         <div>
-          <img
-            className="w-auto h-8"
-            src="https://tailwindui.com/img/logos/mark.svg?color=white"
-            alt="Your Company"
-          />
+          <img className="w-auto h-8" src={logoImage} alt="logo" />
         </div>
         <div>
           <button

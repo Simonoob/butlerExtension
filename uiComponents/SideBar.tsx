@@ -2,6 +2,7 @@ import { Dialog, Transition } from "@headlessui/react"
 import { XMarkIcon } from "@heroicons/react/24/outline"
 import React, { Fragment } from "react"
 
+import logoImage from "~assets/icon.png"
 import usePageStore, { Pages } from "~stores/pageStore"
 
 import { classNames } from "./utils"
@@ -26,7 +27,7 @@ const SideBar = ({
     photoURL: string
   }
 }) => {
-  const { setActive: setActivePage } = usePageStore()
+  const { active: activePage, setActive: setActivePage } = usePageStore()
   return (
     <>
       <Transition.Root show={mobileMenuOpen} as={Fragment}>
@@ -78,11 +79,7 @@ const SideBar = ({
                 </Transition.Child>
                 <div className="pt-5 pb-10">
                   <div className="flex items-center flex-shrink-0 px-4">
-                    <img
-                      className="w-auto h-8"
-                      src="https://tailwindui.com/img/logos/mark.svg?color=white"
-                      alt="Your Company"
-                    />
+                    <img className="w-auto h-8" src={logoImage} alt="Logo" />
                   </div>
                   <nav aria-label="Sidebar" className="mt-10">
                     <div className="px-2 space-y-1">
@@ -118,7 +115,18 @@ const SideBar = ({
                 </div>
                 <div className="flex flex-shrink-0 p-4 border-t border-gray-200">
                   {user && (
-                    <a href="#" className="flex-shrink-0 block group">
+                    <a
+                      href="#"
+                      onClick={() => {
+                        setActivePage("settings")
+                        setMobileMenuOpen(false)
+                      }}
+                      className={classNames(
+                        activePage === "settings"
+                          ? "bg-indigo-800 text-white"
+                          : "text-indigo-100 hover:bg-indigo-800 hover:text-white",
+                        "group py-2 px-3 rounded-md flex items-center text-sm font-medium w-full"
+                      )}>
                       <div className="flex items-center">
                         <div>
                           <img
@@ -149,11 +157,7 @@ const SideBar = ({
           <div className="flex flex-col flex-1 min-h-0 overflow-y-auto bg-indigo-600">
             <div className="flex-1">
               <div className="flex items-center justify-center pt-5">
-                <img
-                  className="w-auto h-8"
-                  src="https://tailwindui.com/img/logos/mark.svg?color=white"
-                  alt="Your Company"
-                />
+                <img className="w-auto h-8" src={logoImage} alt="logo" />
               </div>
               <nav
                 aria-label="Sidebar"
@@ -187,9 +191,20 @@ const SideBar = ({
                 </div>
               </nav>
             </div>
-            <div className="flex flex-shrink-0 pb-5">
+            <div className="flex flex-shrink-0 px-2 pb-5">
               {user && (
-                <a href="#" className="flex-shrink-0 w-full">
+                <a
+                  href="#"
+                  onClick={() => {
+                    setActivePage("settings")
+                    setMobileMenuOpen(false)
+                  }}
+                  className={classNames(
+                    activePage === "settings"
+                      ? "bg-indigo-800 text-white"
+                      : "text-indigo-100 hover:bg-indigo-800 hover:text-white",
+                    "group w-full p-3 rounded-md flex flex-col items-center text-xs font-medium"
+                  )}>
                   <img
                     className="block w-10 h-10 mx-auto rounded-full"
                     src={user.photoURL}

@@ -3,7 +3,7 @@ import { collection, doc, getFirestore, setDoc } from "firebase/firestore"
 
 import { app } from "~firebase"
 
-interface UserInfo {
+export interface UserInfoDb {
   displayName: string
   timelines: Array<{
     events: Array<Event | Wait>
@@ -32,7 +32,7 @@ interface Timeline {
 }
 
 export const createUser = async (user: User) => {
-  const userData: UserInfo = {
+  const userData: UserInfoDb = {
     displayName: user.displayName,
     timelines: [],
     selectedCalendars: []
